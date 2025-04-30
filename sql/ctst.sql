@@ -1,7 +1,7 @@
 -- Exported CTST Data
 
 -- Table: Roles
-INSERT INTO `Roles` (`RoleID`, `Role`) VALUES
+INSERT INTO `Roles` (`RoleID`, `Role`) 
 ('1', 'L'),
 ('2', 'F');
 
