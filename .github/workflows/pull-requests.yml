@@ -1,0 +1,50 @@
+# .github/workflows/validate-sql.yml
+
+name: Validate SQL Data Dump
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push events but only for the main branch
+  pull_request:
+    branches: [ main ] # Or 'master' if that's your default branch
+
+  # Allows you to run this workflow manually from the Actions tab
+  # workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This job validates the SQL file
+  validate-sql:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Python environment, needed for sqlfluff
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x' # Use a recent Python 3 version
+
+      # Install the SQL linter
+      - name: Install sqlfluff
+        run: pip install sqlfluff
+
+      # Run the linter on your specific SQL file
+      # --- IMPORTANT: CUSTOMIZE THE PATH AND DIALECT BELOW ---
+      - name: Lint SQL File
+        run: |
+          echo "Linting SQL file..."
+          # Replace 'path/to/your/data.sql' with the actual path to your SQL file
+          # Replace 'mysql' with your specific SQL dialect if needed (e.g., postgres, sqlite, tsql)
+          sqlfluff lint sql/ctst.sql --dialect mysql
+
+          # Optional: Add a check to ensure the file actually exists if linting doesn't fail on missing file
+          if [ ! -f "path/to/your/data.sql" ]; then
+            echo "::error file=sql/ctst.sql::SQL file not found at specified path."
+            exit 1
+          fi
