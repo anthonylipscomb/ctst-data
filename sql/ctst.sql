@@ -1,11 +1,30 @@
--- Exported CTST Data
+-- Competition Results Manager SQL Export
+-- Generated: 2025-05-02 05:50:41
 
--- Table: Roles
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- Table structure for table `Roles`
+DROP TABLE IF EXISTS `Roles`;
+CREATE TABLE `Roles` (
+  `RoleID` int NOT NULL AUTO_INCREMENT,
+  `Role` varchar(2) COLLATE utf8mb3_unicode_ci NOT NULL,
+  PRIMARY KEY (`RoleID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+-- Data for table `Roles`
 INSERT INTO `Roles` (`RoleID`, `Role`) VALUES
 ('1', 'L'),
 ('2', 'F');
 
--- Table: Divisions
+-- Table structure for table `Divisions`
+DROP TABLE IF EXISTS `Divisions`;
+CREATE TABLE `Divisions` (
+  `DivisionID` int NOT NULL AUTO_INCREMENT,
+  `Division` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  PRIMARY KEY (`DivisionID`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+-- Data for table `Divisions`
 INSERT INTO `Divisions` (`DivisionID`, `Division`) VALUES
 ('10', 'Newcomer'),
 ('20', 'Sophisticated'),
@@ -14,7 +33,15 @@ INSERT INTO `Divisions` (`DivisionID`, `Division`) VALUES
 ('50', 'Intermediate'),
 ('60', 'Advanced');
 
--- Table: EventLocations
+-- Table structure for table `EventLocations`
+DROP TABLE IF EXISTS `EventLocations`;
+CREATE TABLE `EventLocations` (
+  `EventLocationID` int NOT NULL AUTO_INCREMENT,
+  `Location` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  PRIMARY KEY (`EventLocationID`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+-- Data for table `EventLocations`
 INSERT INTO `EventLocations` (`EventLocationID`, `Location`) VALUES
 ('1', 'Albuquerque, NM'),
 ('2', 'Alexandria, LA'),
@@ -49,9 +76,19 @@ INSERT INTO `EventLocations` (`EventLocationID`, `Location`) VALUES
 ('31', 'Irvine, CA'),
 ('32', 'Redmond, OR'),
 ('33', 'Scottsdale, AZ'),
-('34', 'Irving, TX');
+('34', 'Irving, TX'),
+('35', 'Ottawa, Ontario, CAN'),
+('36', 'Temecula, CA');
 
--- Table: EventNames
+-- Table structure for table `EventNames`
+DROP TABLE IF EXISTS `EventNames`;
+CREATE TABLE `EventNames` (
+  `EventNameID` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  PRIMARY KEY (`EventNameID`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+-- Data for table `EventNames`
 INSERT INTO `EventNames` (`EventNameID`, `Name`) VALUES
 ('1', 'ACDA Championships'),
 ('2', 'Arizona Dance Classic'),
@@ -84,9 +121,27 @@ INSERT INTO `EventNames` (`EventNameID`, `Name`) VALUES
 ('29', 'Dance N Play'),
 ('30', 'YESSS!!'),
 ('31', 'Let\'s Dance Portland'),
-('32', 'Forever Country Dance Fest');
+('32', 'Forever Country Dance Fest'),
+('33', 'By-Town Open'),
+('34', 'The Edge'),
+('35', ''),
+('36', '');
 
--- Table: Events
+-- Table structure for table `Events`
+DROP TABLE IF EXISTS `Events`;
+CREATE TABLE `Events` (
+  `EventID` int NOT NULL AUTO_INCREMENT,
+  `EventDate` date NOT NULL,
+  `EventNameID` int NOT NULL,
+  `EventLocationID` int NOT NULL,
+  PRIMARY KEY (`EventID`),
+  KEY `EventNameID` (`EventNameID`),
+  KEY `EventLocationID` (`EventLocationID`),
+  CONSTRAINT `Events_ibfk_1` FOREIGN KEY (`EventNameID`) REFERENCES `EventNames` (`EventNameID`),
+  CONSTRAINT `Events_ibfk_2` FOREIGN KEY (`EventLocationID`) REFERENCES `EventLocations` (`EventLocationID`)
+) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+-- Data for table `Events`
 INSERT INTO `Events` (`EventID`, `EventDate`, `EventNameID`, `EventLocationID`) VALUES
 ('1', '2012-05-24', '7', '12'),
 ('2', '2012-06-24', '4', '8'),
@@ -234,9 +289,31 @@ INSERT INTO `Events` (`EventID`, `EventDate`, `EventNameID`, `EventLocationID`) 
 ('144', '2024-11-03', '5', '7'),
 ('145', '2024-11-09', '32', '34'),
 ('146', '2025-01-03', '27', '24'),
-('147', '2025-03-07', '9', '18');
+('147', '2025-03-07', '9', '18'),
+('148', '2025-03-07', '33', '35'),
+('149', '2025-04-06', '34', '36'),
+('150', '2025-04-13', '3', '5');
 
--- Table: Contests
+-- Table structure for table `Contests`
+DROP TABLE IF EXISTS `Contests`;
+CREATE TABLE `Contests` (
+  `ContestID` int NOT NULL AUTO_INCREMENT,
+  `EventID` int NOT NULL,
+  `DivisionID` int NOT NULL,
+  `RoleID` int NOT NULL,
+  `Tier` int NOT NULL,
+  `NumEntries` int NOT NULL,
+  `Description` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`ContestID`),
+  KEY `EventID` (`EventID`),
+  KEY `DivisionID` (`DivisionID`),
+  KEY `RoleID` (`RoleID`),
+  CONSTRAINT `Contests_ibfk_1` FOREIGN KEY (`EventID`) REFERENCES `Events` (`EventID`),
+  CONSTRAINT `Contests_ibfk_2` FOREIGN KEY (`DivisionID`) REFERENCES `Divisions` (`DivisionID`),
+  CONSTRAINT `Contests_ibfk_3` FOREIGN KEY (`RoleID`) REFERENCES `Roles` (`RoleID`)
+) ENGINE=InnoDB AUTO_INCREMENT=816 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+-- Data for table `Contests`
 INSERT INTO `Contests` (`ContestID`, `EventID`, `DivisionID`, `RoleID`, `Tier`, `NumEntries`, `Description`) VALUES
 ('1', '1', '40', '1', '2', '-1', NULL),
 ('2', '1', '40', '2', '2', '-1', NULL),
@@ -1040,11 +1117,30 @@ INSERT INTO `Contests` (`ContestID`, `EventID`, `DivisionID`, `RoleID`, `Tier`, 
 ('800', '146', '20', '1', '0', '3', NULL),
 ('801', '146', '20', '2', '1', '5', NULL),
 ('802', '147', '40', '1', '1', '11', NULL),
-('803', '147', '40', '2', '1', '11', NULL),
+('803', '147', '40', '2', '1', '20', NULL),
 ('804', '147', '50', '1', '1', '9', NULL),
-('805', '147', '50', '2', '1', '8', NULL);
+('805', '147', '50', '2', '1', '7', NULL),
+('806', '148', '40', '1', '1', '6', NULL),
+('807', '148', '40', '2', '1', '12', NULL),
+('808', '148', '50', '1', '0', '4', NULL),
+('809', '148', '50', '2', '0', '4', NULL),
+('810', '149', '40', '1', '2', '16', NULL),
+('811', '149', '40', '2', '2', '17', NULL),
+('812', '150', '40', '1', '1', '7', NULL),
+('813', '150', '40', '2', '2', '23', NULL),
+('814', '150', '50', '1', '1', '6', NULL),
+('815', '150', '50', '2', '1', '9', NULL);
 
--- Table: Competitors
+-- Table structure for table `Competitors`
+DROP TABLE IF EXISTS `Competitors`;
+CREATE TABLE `Competitors` (
+  `CompetitorID` int NOT NULL AUTO_INCREMENT,
+  `LastName` varchar(50) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `FirstName` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL,
+  PRIMARY KEY (`CompetitorID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1997 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+-- Data for table `Competitors`
 INSERT INTO `Competitors` (`CompetitorID`, `LastName`, `FirstName`) VALUES
 ('100', 'Benavidez-Wayne', 'Yvonne'),
 ('101', 'Berard', 'Jack'),
@@ -1627,7 +1723,7 @@ INSERT INTO `Competitors` (`CompetitorID`, `LastName`, `FirstName`) VALUES
 ('759', 'Warder', 'Don'),
 ('760', 'Sweetland', 'Coralee'),
 ('761', 'Truss', 'Michael'),
-('762', 'Gaskin', 'Charlene'),
+('762', 'Gaskin', 'Carlene'),
 ('763', 'Doran', 'Sherry'),
 ('764', 'Garvin', 'Bobby'),
 ('765', 'Edwards', 'Cindy'),
@@ -2302,7 +2398,7 @@ INSERT INTO `Competitors` (`CompetitorID`, `LastName`, `FirstName`) VALUES
 ('1855', 'Rogers', 'Anna'),
 ('1856', 'Black', 'Erin'),
 ('1857', 'Roth', 'Hannah'),
-('1858', 'Krautscheild', 'Karen'),
+('1858', 'Krautscheid', 'Karen'),
 ('1859', 'Reid', 'Lila'),
 ('1860', 'Robyn', 'April'),
 ('1861', 'Park', 'Cindy'),
@@ -2410,9 +2506,54 @@ INSERT INTO `Competitors` (`CompetitorID`, `LastName`, `FirstName`) VALUES
 ('1963', 'Williams', 'Mindy'),
 ('1964', 'Oneal', 'Jordan'),
 ('1965', 'La Douceur', 'Pat'),
-('1966', 'Dusenberry', 'Angela');
+('1966', 'Dusenberry', 'Angela'),
+('1967', 'McDonald', 'Philip'),
+('1968', 'Robichaud', 'Daniella'),
+('1969', 'Hallam', 'Christopher'),
+('1970', 'Menard', 'Dominique'),
+('1971', 'Marchard', 'Jean-Paul'),
+('1972', 'Rae', 'Marnie'),
+('1973', 'Landis', 'Roy'),
+('1974', 'Joly', 'Patrice'),
+('1975', 'Atyeo', 'Mark'),
+('1976', 'Scarfo', 'Lisa'),
+('1977', 'Cruz', 'Daniel'),
+('1978', 'Cruz', 'Lourdes'),
+('1979', 'Hughes', 'Scott'),
+('1980', 'Keroack', 'Vanessa'),
+('1981', 'Nichols', 'Kat'),
+('1982', 'Paul', 'Kyle'),
+('1983', 'Ries', 'Breanna'),
+('1984', 'Galvan', 'Jordan'),
+('1985', 'Carlbom', 'Joel'),
+('1986', 'Pablo', 'Mark'),
+('1987', 'Karras', 'Ashlee'),
+('1988', 'Giffen', 'Robyn'),
+('1989', 'Mcilmoyl', 'Richard'),
+('1990', 'Gordon', 'Merrina'),
+('1991', 'Welsh', 'Joe'),
+('1992', 'Vittorio Sinajon', 'Pierre'),
+('1993', 'Suchon', 'Ola'),
+('1994', 'Robertson', 'Orlando'),
+('1995', 'Rogers', 'Emily'),
+('1996', 'Layman', 'Holly');
 
--- Table: Results
+-- Table structure for table `Results`
+DROP TABLE IF EXISTS `Results`;
+CREATE TABLE `Results` (
+  `ResultID` int NOT NULL AUTO_INCREMENT,
+  `ContestID` int NOT NULL,
+  `Result` int NOT NULL,
+  `Points` int NOT NULL,
+  `CompetitorID` int NOT NULL,
+  PRIMARY KEY (`ResultID`),
+  KEY `ContestID` (`ContestID`),
+  KEY `CompetitorID` (`CompetitorID`),
+  CONSTRAINT `Results_ibfk_1` FOREIGN KEY (`ContestID`) REFERENCES `Contests` (`ContestID`),
+  CONSTRAINT `Results_ibfk_2` FOREIGN KEY (`CompetitorID`) REFERENCES `Competitors` (`CompetitorID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5000 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+-- Data for table `Results`
 INSERT INTO `Results` (`ResultID`, `ContestID`, `Result`, `Points`, `CompetitorID`) VALUES
 ('1', '1', '1', '10', '125'),
 ('2', '1', '2', '8', '106'),
@@ -7162,7 +7303,7 @@ INSERT INTO `Results` (`ResultID`, `ContestID`, `Result`, `Points`, `CompetitorI
 ('4746', '779', '2', '4', '176'),
 ('4747', '779', '3', '3', '119'),
 ('4748', '779', '4', '2', '170'),
-('4749', '779', '5', '1', '176'),
+('4749', '779', '5', '0', '176'),
 ('4750', '779', '6', '0', '143'),
 ('4751', '779', '7', '0', '1224'),
 ('4752', '779', '8', '0', '170'),
@@ -7315,16 +7456,16 @@ INSERT INTO `Results` (`ResultID`, `ContestID`, `Result`, `Points`, `CompetitorI
 ('4899', '802', '9', '0', '1029'),
 ('4900', '802', '10', '0', '1600'),
 ('4901', '802', '11', '0', '679'),
-('4902', '803', '1', '5', '1958'),
-('4903', '803', '2', '4', '1650'),
-('4904', '803', '3', '3', '1960'),
-('4905', '803', '4', '2', '1932'),
-('4906', '803', '5', '1', '1651'),
-('4907', '803', '6', '0', '1638'),
-('4908', '803', '7', '0', '1963'),
-('4909', '803', '8', '0', '1805'),
-('4910', '803', '9', '0', '1652'),
-('4911', '803', '10', '0', '1965'),
+('4902', '803', '1', '10', '1958'),
+('4903', '803', '2', '8', '1650'),
+('4904', '803', '3', '6', '1960'),
+('4905', '803', '4', '4', '1932'),
+('4906', '803', '5', '2', '1651'),
+('4907', '803', '6', '1', '1638'),
+('4908', '803', '7', '1', '1963'),
+('4909', '803', '8', '1', '1805'),
+('4910', '803', '9', '1', '1652'),
+('4911', '803', '10', '1', '1965'),
 ('4912', '803', '11', '0', '1966'),
 ('4913', '804', '1', '5', '1645'),
 ('4914', '804', '2', '4', '207'),
@@ -7343,4 +7484,74 @@ INSERT INTO `Results` (`ResultID`, `ContestID`, `Result`, `Points`, `CompetitorI
 ('4928', '805', '6', '0', '274'),
 ('4929', '805', '7', '0', '1302'),
 ('4930', '805', '8', '0', '1830'),
-('4931', '805', '9', '0', '1221');
+('4931', '805', '9', '0', '1221'),
+('4932', '806', '1', '5', '1967'),
+('4933', '806', '2', '4', '1969'),
+('4934', '806', '3', '3', '1971'),
+('4935', '806', '4', '2', '1846'),
+('4936', '806', '5', '1', '1973'),
+('4937', '806', '6', '0', '1975'),
+('4938', '807', '1', '5', '1968'),
+('4939', '807', '2', '4', '1970'),
+('4940', '807', '3', '3', '1044'),
+('4941', '807', '4', '2', '1972'),
+('4942', '807', '5', '1', '1974'),
+('4943', '807', '6', '0', '1976'),
+('4944', '808', '1', '0', '1977'),
+('4945', '808', '2', '0', '301'),
+('4946', '808', '3', '0', '325'),
+('4947', '808', '4', '0', '1979'),
+('4948', '809', '1', '0', '1852'),
+('4949', '809', '2', '0', '1613'),
+('4950', '809', '3', '0', '1978'),
+('4951', '809', '4', '0', '1980'),
+('4952', '810', '1', '10', '1959'),
+('4953', '811', '1', '10', '1996'),
+('4954', '810', '2', '8', '1981'),
+('4955', '811', '2', '8', '1945'),
+('4956', '810', '3', '6', '1574'),
+('4957', '811', '3', '6', '1913'),
+('4958', '810', '4', '4', '1982'),
+('4959', '811', '4', '4', '1869'),
+('4960', '810', '5', '2', '1983'),
+('4961', '811', '5', '2', '1870'),
+('4962', '810', '6', '1', '1984'),
+('4963', '811', '6', '1', '1882'),
+('4964', '810', '7', '1', '1985'),
+('4965', '811', '7', '1', '1805'),
+('4966', '810', '8', '1', '1986'),
+('4967', '811', '8', '1', '1987'),
+('4968', '812', '1', '5', '1401'),
+('4969', '813', '1', '10', '1850'),
+('4970', '812', '2', '4', '1912'),
+('4971', '813', '2', '8', '1988'),
+('4972', '812', '3', '3', '1989'),
+('4973', '813', '3', '6', '1990'),
+('4974', '812', '4', '2', '1610'),
+('4975', '813', '4', '4', '1044'),
+('4976', '812', '5', '1', '1846'),
+('4977', '813', '5', '2', '1970'),
+('4978', '812', '6', '0', '1991'),
+('4979', '813', '6', '1', '1913'),
+('4980', '812', '7', '0', '1992'),
+('4981', '813', '7', '1', '1993'),
+('4982', '814', '1', '5', '723'),
+('4983', '815', '1', '5', '1538'),
+('4984', '814', '2', '4', '1608'),
+('4985', '815', '2', '4', '1848'),
+('4986', '814', '3', '3', '1843'),
+('4987', '815', '3', '3', '1852'),
+('4988', '814', '4', '2', '325'),
+('4989', '815', '4', '2', '1166'),
+('4990', '814', '5', '1', '1994'),
+('4991', '815', '5', '1', '1613'),
+('4992', '814', '6', '0', '325'),
+('4993', '815', '6', '0', '760'),
+('4994', '814', '7', '0', '1245'),
+('4995', '815', '7', '0', '1221'),
+('4996', '814', '8', '0', '1608'),
+('4997', '815', '8', '0', '939'),
+('4998', '814', '9', '0', '1843'),
+('4999', '815', '9', '0', '1996');
+
+SET FOREIGN_KEY_CHECKS = 1;
