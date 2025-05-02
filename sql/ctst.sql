@@ -123,9 +123,7 @@ INSERT INTO `EventNames` (`EventNameID`, `Name`) VALUES
 ('31', 'Let\'s Dance Portland'),
 ('32', 'Forever Country Dance Fest'),
 ('33', 'By-Town Open'),
-('34', 'The Edge'),
-('35', ''),
-('36', '');
+('34', 'The Edge');
 
 -- Table structure for table `Events`
 DROP TABLE IF EXISTS `Events`;
