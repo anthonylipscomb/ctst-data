@@ -1,10 +1,6 @@
--- Competition Results Manager SQL Export
--- Generated: 2025-05-02 05:50:41
-
 SET
     FOREIGN_KEY_CHECKS = 0;
 
--- Table structure for table `Roles`
 DROP TABLE IF EXISTS `Roles`;
 CREATE TABLE `Roles`
 (
@@ -16,12 +12,10 @@ CREATE TABLE `Roles`
   DEFAULT CHARSET = utf8mb3
   COLLATE = utf8mb3_unicode_ci;
 
--- Data for table `Roles`
 INSERT INTO `Roles` (`RoleID`, `Role`)
 VALUES ('1', 'L'),
        ('2', 'F');
 
--- Table structure for table `Divisions`
 DROP TABLE IF EXISTS `Divisions`;
 CREATE TABLE `Divisions`
 (
@@ -33,7 +27,6 @@ CREATE TABLE `Divisions`
   DEFAULT CHARSET = utf8mb3
   COLLATE = utf8mb3_unicode_ci;
 
--- Data for table `Divisions`
 INSERT INTO `Divisions` (`DivisionID`, `Division`)
 VALUES ('10', 'Newcomer'),
        ('20', 'Sophisticated'),
@@ -42,7 +35,6 @@ VALUES ('10', 'Newcomer'),
        ('50', 'Intermediate'),
        ('60', 'Advanced');
 
--- Table structure for table `EventLocations`
 DROP TABLE IF EXISTS `EventLocations`;
 CREATE TABLE `EventLocations`
 (
@@ -54,7 +46,6 @@ CREATE TABLE `EventLocations`
   DEFAULT CHARSET = utf8mb3
   COLLATE = utf8mb3_unicode_ci;
 
--- Data for table `EventLocations`
 INSERT INTO `EventLocations` (`EventLocationID`, `Location`)
 VALUES ('1', 'Albuquerque, NM'),
        ('2', 'Alexandria, LA'),
@@ -93,7 +84,6 @@ VALUES ('1', 'Albuquerque, NM'),
        ('35', 'Ottawa, Ontario, CAN'),
        ('36', 'Temecula, CA');
 
--- Table structure for table `EventNames`
 DROP TABLE IF EXISTS `EventNames`;
 CREATE TABLE `EventNames`
 (
@@ -105,7 +95,6 @@ CREATE TABLE `EventNames`
   DEFAULT CHARSET = utf8mb3
   COLLATE = utf8mb3_unicode_ci;
 
--- Data for table `EventNames`
 INSERT INTO `EventNames` (`EventNameID`, `Name`)
 VALUES ('1', 'ACDA Championships'),
        ('2', 'Arizona Dance Classic'),
@@ -142,7 +131,6 @@ VALUES ('1', 'ACDA Championships'),
        ('33', 'By-Town Open'),
        ('34', 'The Edge');
 
--- Table structure for table `Events`
 DROP TABLE IF EXISTS `Events`;
 CREATE TABLE `Events`
 (
@@ -160,7 +148,6 @@ CREATE TABLE `Events`
   DEFAULT CHARSET = utf8mb3
   COLLATE = utf8mb3_unicode_ci;
 
--- Data for table `Events`
 INSERT INTO `Events` (`EventID`, `EventDate`, `EventNameID`, `EventLocationID`)
 VALUES ('1', '2012-05-24', '7', '12'),
        ('2', '2012-06-24', '4', '8'),
@@ -313,7 +300,6 @@ VALUES ('1', '2012-05-24', '7', '12'),
        ('149', '2025-04-06', '34', '36'),
        ('150', '2025-04-13', '3', '5');
 
--- Table structure for table `Contests`
 DROP TABLE IF EXISTS `Contests`;
 CREATE TABLE `Contests`
 (
@@ -336,7 +322,6 @@ CREATE TABLE `Contests`
   DEFAULT CHARSET = utf8mb3
   COLLATE = utf8mb3_unicode_ci;
 
--- Data for table `Contests`
 INSERT INTO `Contests` (`ContestID`, `EventID`, `DivisionID`, `RoleID`, `Tier`, `NumEntries`, `Description`)
 VALUES ('1', '1', '40', '1', '2', '-1', NULL),
        ('2', '1', '40', '2', '2', '-1', NULL),
@@ -1154,7 +1139,6 @@ VALUES ('1', '1', '40', '1', '2', '-1', NULL),
        ('814', '150', '50', '1', '1', '6', NULL),
        ('815', '150', '50', '2', '1', '9', NULL);
 
--- Table structure for table `Competitors`
 DROP TABLE IF EXISTS `Competitors`;
 CREATE TABLE `Competitors`
 (
@@ -1167,7 +1151,6 @@ CREATE TABLE `Competitors`
   DEFAULT CHARSET = utf8mb3
   COLLATE = utf8mb3_unicode_ci;
 
--- Data for table `Competitors`
 INSERT INTO `Competitors` (`CompetitorID`, `LastName`, `FirstName`)
 VALUES ('100', 'Benavidez-Wayne', 'Yvonne'),
        ('101', 'Berard', 'Jack'),
@@ -2565,7 +2548,6 @@ VALUES ('100', 'Benavidez-Wayne', 'Yvonne'),
        ('1995', 'Rogers', 'Emily'),
        ('1996', 'Layman', 'Holly');
 
--- Table structure for table `Results`
 DROP TABLE IF EXISTS `Results`;
 CREATE TABLE `Results`
 (
@@ -2584,7 +2566,6 @@ CREATE TABLE `Results`
   DEFAULT CHARSET = utf8mb3
   COLLATE = utf8mb3_unicode_ci;
 
--- Data for table `Results`
 INSERT INTO `Results` (`ResultID`, `ContestID`, `Result`, `Points`, `CompetitorID`)
 VALUES ('1', '1', '1', '10', '125'),
        ('2', '1', '2', '8', '106'),
