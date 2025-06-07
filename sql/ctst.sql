@@ -1,36 +1,23 @@
--- Competition Results Manager SQL Export
--- Generated: 2025-05-02 05:50:41
-
--- Table structure for table `Roles`
 DROP TABLE IF EXISTS `Roles`;
 CREATE TABLE `Roles`
 (
     `RoleID` int                                   NOT NULL AUTO_INCREMENT,
     `Role`   varchar(2) COLLATE utf8mb3_unicode_ci NOT NULL,
     PRIMARY KEY (`RoleID`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 3
-  DEFAULT CHARSET = utf8mb3
-  COLLATE = utf8mb3_unicode_ci;
+);
 
--- Data for table `Roles`
 INSERT INTO `Roles` (`RoleID`, `Role`)
 VALUES ('1', 'L'),
        ('2', 'F');
 
--- Table structure for table `Divisions`
 DROP TABLE IF EXISTS `Divisions`;
 CREATE TABLE `Divisions`
 (
     `DivisionID` int                                     NOT NULL AUTO_INCREMENT,
     `Division`   varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
     PRIMARY KEY (`DivisionID`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 61
-  DEFAULT CHARSET = utf8mb3
-  COLLATE = utf8mb3_unicode_ci;
+);
 
--- Data for table `Divisions`
 INSERT INTO `Divisions` (`DivisionID`, `Division`)
 VALUES ('10', 'Newcomer'),
        ('20', 'Sophisticated'),
@@ -39,19 +26,14 @@ VALUES ('10', 'Newcomer'),
        ('50', 'Intermediate'),
        ('60', 'Advanced');
 
--- Table structure for table `EventLocations`
 DROP TABLE IF EXISTS `EventLocations`;
 CREATE TABLE `EventLocations`
 (
     `EventLocationID` int                                     NOT NULL AUTO_INCREMENT,
     `Location`        varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
     PRIMARY KEY (`EventLocationID`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 37
-  DEFAULT CHARSET = utf8mb3
-  COLLATE = utf8mb3_unicode_ci;
+);
 
--- Data for table `EventLocations`
 INSERT INTO `EventLocations` (`EventLocationID`, `Location`)
 VALUES ('1', 'Albuquerque, NM'),
        ('2', 'Alexandria, LA'),
@@ -90,19 +72,14 @@ VALUES ('1', 'Albuquerque, NM'),
        ('35', 'Ottawa, Ontario, CAN'),
        ('36', 'Temecula, CA');
 
--- Table structure for table `EventNames`
 DROP TABLE IF EXISTS `EventNames`;
 CREATE TABLE `EventNames`
 (
     `EventNameID` int                                     NOT NULL AUTO_INCREMENT,
     `Name`        varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
     PRIMARY KEY (`EventNameID`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 37
-  DEFAULT CHARSET = utf8mb3
-  COLLATE = utf8mb3_unicode_ci;
+);
 
--- Data for table `EventNames`
 INSERT INTO `EventNames` (`EventNameID`, `Name`)
 VALUES ('1', 'ACDA Championships'),
        ('2', 'Arizona Dance Classic'),
@@ -139,7 +116,6 @@ VALUES ('1', 'ACDA Championships'),
        ('33', 'By-Town Open'),
        ('34', 'The Edge');
 
--- Table structure for table `Events`
 DROP TABLE IF EXISTS `Events`;
 CREATE TABLE `Events`
 (
@@ -152,12 +128,8 @@ CREATE TABLE `Events`
     KEY `EventLocationID` (`EventLocationID`),
     CONSTRAINT `Events_ibfk_1` FOREIGN KEY (`EventNameID`) REFERENCES `EventNames` (`EventNameID`),
     CONSTRAINT `Events_ibfk_2` FOREIGN KEY (`EventLocationID`) REFERENCES `EventLocations` (`EventLocationID`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 151
-  DEFAULT CHARSET = utf8mb3
-  COLLATE = utf8mb3_unicode_ci;
+);
 
--- Data for table `Events`
 INSERT INTO `Events` (`EventID`, `EventDate`, `EventNameID`, `EventLocationID`)
 VALUES ('1', '2012-05-24', '7', '12'),
        ('2', '2012-06-24', '4', '8'),
@@ -310,7 +282,6 @@ VALUES ('1', '2012-05-24', '7', '12'),
        ('149', '2025-04-06', '34', '36'),
        ('150', '2025-04-13', '3', '5');
 
--- Table structure for table `Contests`
 DROP TABLE IF EXISTS `Contests`;
 CREATE TABLE `Contests`
 (
@@ -328,12 +299,8 @@ CREATE TABLE `Contests`
     CONSTRAINT `Contests_ibfk_1` FOREIGN KEY (`EventID`) REFERENCES `Events` (`EventID`),
     CONSTRAINT `Contests_ibfk_2` FOREIGN KEY (`DivisionID`) REFERENCES `Divisions` (`DivisionID`),
     CONSTRAINT `Contests_ibfk_3` FOREIGN KEY (`RoleID`) REFERENCES `Roles` (`RoleID`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 816
-  DEFAULT CHARSET = utf8mb3
-  COLLATE = utf8mb3_unicode_ci;
+);
 
--- Data for table `Contests`
 INSERT INTO `Contests` (`ContestID`, `EventID`, `DivisionID`, `RoleID`, `Tier`, `NumEntries`, `Description`)
 VALUES ('1', '1', '40', '1', '2', '-1', NULL),
        ('2', '1', '40', '2', '2', '-1', NULL),
@@ -1151,7 +1118,6 @@ VALUES ('1', '1', '40', '1', '2', '-1', NULL),
        ('814', '150', '50', '1', '1', '6', NULL),
        ('815', '150', '50', '2', '1', '9', NULL);
 
--- Table structure for table `Competitors`
 DROP TABLE IF EXISTS `Competitors`;
 CREATE TABLE `Competitors`
 (
@@ -1159,12 +1125,8 @@ CREATE TABLE `Competitors`
     `LastName`     varchar(50) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
     `FirstName`    varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL,
     PRIMARY KEY (`CompetitorID`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 1997
-  DEFAULT CHARSET = utf8mb3
-  COLLATE = utf8mb3_unicode_ci;
+);
 
--- Data for table `Competitors`
 INSERT INTO `Competitors` (`CompetitorID`, `LastName`, `FirstName`)
 VALUES ('100', 'Benavidez-Wayne', 'Yvonne'),
        ('101', 'Berard', 'Jack'),
@@ -2562,7 +2524,6 @@ VALUES ('100', 'Benavidez-Wayne', 'Yvonne'),
        ('1995', 'Rogers', 'Emily'),
        ('1996', 'Layman', 'Holly');
 
--- Table structure for table `Results`
 DROP TABLE IF EXISTS `Results`;
 CREATE TABLE `Results`
 (
@@ -2576,12 +2537,8 @@ CREATE TABLE `Results`
     KEY `CompetitorID` (`CompetitorID`),
     CONSTRAINT `Results_ibfk_1` FOREIGN KEY (`ContestID`) REFERENCES `Contests` (`ContestID`),
     CONSTRAINT `Results_ibfk_2` FOREIGN KEY (`CompetitorID`) REFERENCES `Competitors` (`CompetitorID`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 5000
-  DEFAULT CHARSET = utf8mb3
-  COLLATE = utf8mb3_unicode_ci;
+);
 
--- Data for table `Results`
 INSERT INTO `Results` (`ResultID`, `ContestID`, `Result`, `Points`, `CompetitorID`)
 VALUES ('1', '1', '1', '10', '125'),
        ('2', '1', '2', '8', '106'),
